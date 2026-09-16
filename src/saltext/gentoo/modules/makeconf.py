@@ -6,6 +6,8 @@ Support for modifying make.conf under Gentoo
 import salt.utils.data
 import salt.utils.files
 
+MAKECONF = "/etc/portage/make.conf"
+
 
 def __virtual__():
     """
@@ -19,19 +21,6 @@ def __virtual__():
     )
 
 
-def _get_makeconf():
-    """
-    Find the correct make.conf. Gentoo recently moved the make.conf
-    but still supports the old location, using the old location first
-    """
-    old_conf = "/etc/make.conf"
-    new_conf = "/etc/portage/make.conf"
-    if __salt__["file.file_exists"](old_conf):
-        return old_conf
-    elif __salt__["file.file_exists"](new_conf):
-        return new_conf
-
-
 def _add_var(var, value):
     """
     Add a new var to the make.conf. If using layman, the source line
@@ -39,20 +28,8 @@ def _add_var(var, value):
     config. This ensures that the new var will be above the source
     line.
     """
-    makeconf = _get_makeconf()
-    layman = "source /var/lib/layman/make.conf"
     fullvar = f'{var}="{value}"'
-    if __salt__["file.contains"](makeconf, layman):
-        # TODO perhaps make this a function in the file module?
-        cmd = [
-            "sed",
-            "-i",
-            r"/{}/ i\{}".format(layman.replace("/", "\\/"), fullvar),
-            makeconf,
-        ]
-        __salt__["cmd.run"](cmd)
-    else:
-        __salt__["file.append"](makeconf, fullvar)
+    __salt__["file.append"](MAKECONF, fullvar)
 
 
 def set_var(var, value):
@@ -70,13 +47,11 @@ def set_var(var, value):
 
         salt '*' makeconf.set_var 'LINGUAS' 'en'
     """
-    makeconf = _get_makeconf()
-
     old_value = get_var(var)
 
     # If var already in file, replace its value
     if old_value is not None:
-        __salt__["file.sed"](makeconf, f"^{var}=.*", f'{var}="{value}"')
+        __salt__["file.sed"](MAKECONF, f"^{var}=.*", f'{var}="{value}"')
     else:
         _add_var(var, value)
 
@@ -99,13 +74,11 @@ def remove_var(var):
 
         salt '*' makeconf.remove_var 'LINGUAS'
     """
-    makeconf = _get_makeconf()
-
     old_value = get_var(var)
 
     # If var is in file
     if old_value is not None:
-        __salt__["file.sed"](makeconf, f"^{var}=.*", "")
+        __salt__["file.sed"](MAKECONF, f"^{var}=.*", "")
 
     new_value = get_var(var)
     return {var: {"old": old_value, "new": new_value}}
@@ -126,14 +99,12 @@ def append_var(var, value):
 
         salt '*' makeconf.append_var 'LINGUAS' 'en'
     """
-    makeconf = _get_makeconf()
-
     old_value = get_var(var)
 
     # If var already in file, add to its value
     if old_value is not None:
         appended_value = f"{old_value} {value}"
-        __salt__["file.sed"](makeconf, f"^{var}=.*", f'{var}="{appended_value}"')
+        __salt__["file.sed"](MAKECONF, f"^{var}=.*", f'{var}="{appended_value}"')
     else:
         _add_var(var, value)
 
@@ -156,13 +127,11 @@ def trim_var(var, value):
 
         salt '*' makeconf.trim_var 'LINGUAS' 'en'
     """
-    makeconf = _get_makeconf()
-
     old_value = get_var(var)
 
     # If var in file, trim value from its value
     if old_value is not None:
-        __salt__["file.sed"](makeconf, value, "", limit=var)
+        __salt__["file.sed"](MAKECONF, value, "", limit=var)
 
     new_value = get_var(var)
     return {var: {"old": old_value, "new": new_value}}
@@ -181,9 +150,8 @@ def get_var(var):
 
         salt '*' makeconf.get_var 'LINGUAS'
     """
-    makeconf = _get_makeconf()
     # Open makeconf
-    with salt.utils.files.fopen(makeconf) as fn_:
+    with salt.utils.files.fopen(MAKECONF) as fn_:
         conf_file = salt.utils.data.decode(fn_.readlines())
     for line in conf_file:
         if line.startswith(var):
