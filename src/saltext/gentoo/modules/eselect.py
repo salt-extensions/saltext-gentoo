@@ -17,8 +17,10 @@ def __virtual__():
         return "eselect"
     return (
         False,
-        "The eselect execution module cannot be loaded: either the system is not Gentoo"
-        " or the eselect binary is not in the path.",
+        (
+            "The eselect execution module cannot be loaded: either the system is not Gentoo",
+            " or the eselect binary is not in the path.",
+        ),
     )
 
 
