@@ -1,4 +1,4 @@
-[![Push](https://github.com/Ninpo/saltext-gentoo/actions/workflows/push.yml/badge.svg)](https://github.com/Ninpo/saltext-gentoo/actions/workflows/push.yml)[![Tagged Releases](https://github.com/Ninpo/saltext-gentoo/actions/workflows/tag.yml/badge.svg)](https://github.com/Ninpo/saltext-gentoo/actions/workflows/tag.yml)
+[![Push](https://github.com/salt-extensions/saltext-gentoo/actions/workflows/push.yml/badge.svg)](https://github.com/salt-extensions/saltext-gentoo/actions/workflows/push.yml)[![Tagged Releases](https://github.com/salt-extensions/saltext-gentoo/actions/workflows/tag.yml/badge.svg)](https://github.com/salt-extensions/saltext-gentoo/actions/workflows/tag.yml)
 # Salt Extension for Gentoo Linux
 
 Salt Extension for interacting with Gentoo Linux
@@ -27,7 +27,7 @@ To get started contributing, first clone this repository (or your fork):
 
 ```bash
 # Clone the repo
-git clone --origin upstream git@github.com:Ninpo/saltext-gentoo.git
+git clone --origin upstream git@github.com:salt-extensions/saltext-gentoo.git
 
 # Change to the repo dir
 cd saltext-gentoo
@@ -101,7 +101,7 @@ appreciate every contribution!
 [first-steps]: https://salt-extensions.github.io/salt-extension-copier/topics/creation.html#initialize-the-python-virtual-environment
 [submitting-pr]: https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request-from-a-fork
 [direnv]: https://direnv.net
-[issues]: https://github.com/Ninpo/saltext-gentoo/issues
-[PRs]: https://github.com/Ninpo/saltext-gentoo/pulls
-[discussions]: https://github.com/Ninpo/saltext-gentoo/discussions
+[issues]: https://github.com/salt-extensions/saltext-gentoo/issues
+[PRs]: https://github.com/salt-extensions/saltext-gentoo/pulls
+[discussions]: https://github.com/salt-extensions/saltext-gentoo/discussions
 [comments]: https://conventionalcomments.org/
