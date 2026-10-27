@@ -22,9 +22,9 @@ project_name: gentoo
 python_requires: '3.13'
 relax_pylint: true
 salt_version: '3008'
-source_url: https://github.com/Ninpo/saltext-gentoo
+source_url: https://github.com/salt-extensions/saltext-gentoo
 ssh_fixtures: false
 summary: Salt Extension for interacting with Gentoo Linux
 test_containers: false
-tracker_url: https://github.com/Ninpo/saltext-gentoo/issues
-url: https://github.com/Ninpo/saltext-gentoo
+tracker_url: https://github.com/salt-extensions/saltext-gentoo/issues
+url: https://github.com/salt-extensions/saltext-gentoo
